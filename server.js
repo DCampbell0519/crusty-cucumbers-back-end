@@ -8,6 +8,8 @@ const cors = require('cors')
 const testJwtWRouter = require('./controllers/test-jwt.js')
 const authRouter = require('./controllers/auth.js')
 const userRouter = require('./controllers/user.js')
+const { searchMovies } = require('./controllers/movies.js')
+const moviesRouter = require('./routes/movies.js')
 
 mongoose.connect(process.env.MONGODB_URI)
 
@@ -16,7 +18,7 @@ mongoose.connection.on('connected', () => {
 })
 
 
-app.use(cors()) // allows other API's or sites to connect to our API
+app.use(cors({origin: 'http://localhost:5173', credentials: true })) // allows other API's or sites to connect to our API
 app.use(express.json()) // Accept JSON in req.body
 app.use(morgan('dev')) // logs requests to the console
 
@@ -24,6 +26,7 @@ app.use(morgan('dev')) // logs requests to the console
 app.use('/test-jwt', testJwtWRouter)
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
+app.use('/api/movies', moviesRouter)
 
 
 
