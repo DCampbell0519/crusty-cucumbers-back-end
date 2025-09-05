@@ -1,7 +1,7 @@
 const axios = require('axios')
-
-const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}&`
 const API_KEY = process.env.OMDB_API_KEY
+const BASE_URL = `https://www.omdbapi.com/?apikey=${API_KEY}&`
+
 
 function isNA(value) {
     return !value || value === 'N/A'
