@@ -1,16 +1,48 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const movieSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  release_year: Number,
-  duration_minutes: Number,
-  poster_url: String,
-  director: String,
-  genre: String,
-  averageRating: { type: Number, default: 0 },
-  totalReviews: { type: Number, default: 0 },
-  // other fields...
-}, { timestamps: true });
+    imdbID: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    posterUrl: {
+        type: String,
+        default: null,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    year: {
+        type: Number,
+        required: true,
+    },
+    genre: {
+        type: String,
+    },
+    director: {
+        type: String,
+    },
+    runtimeMinutes: {
+        type: Number,
+    },
+    averageRating: {
+        type: Number,
+        default: 0,
+    },
+    totalReviews: {
+        type: Number,
+        default: 0,
+    },
+    plot: {
+        type: String,
+    }
+},
+{ timestamps: true }
+)
 
-module.exports = mongoose.model('Movie', movieSchema);
+const Movie = mongoose.model('Movie', movieSchema)
+
+module.exports = Movie
+
