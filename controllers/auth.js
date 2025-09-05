@@ -25,7 +25,7 @@ router.post('/sign-up', async (req, res) => {
         
         const payload = { username: user.username, _id: user._id}
 
-        // create a new auth jwt token for the new user
+        // create a new auth jwt token for the new user 
         const token = jwt.sign({ payload }, process.env.JWT_SECRET)
 
         res.status(201).json({ token })
