@@ -20,7 +20,10 @@ router.post('/sign-up', async (req, res) => {
         // No user with that username exists, let's create a new user
         const user = await User.create({
             username: req.body.username,
-            hashedPassword: bcrypt.hashSync(req.body.password, saltRounds)
+            hashedPassword: bcrypt.hashSync(req.body.hashedPassword, saltRounds),
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
         })
         
         const payload = { username: user.username, _id: user._id}
@@ -44,7 +47,7 @@ router.post('/sign-in', async (req, res) => {
         }
 
         // this will return true if the passwords match, and false if they do not
-        const isPasswordCorrect = bcrypt.compareSync(req.body.password, userInDatabase.hashedPassword)
+        const isPasswordCorrect = bcrypt.compareSync(req.body.hashedPassword, userInDatabase.hashedPassword)
 
         if (!isPasswordCorrect) {
             return res.status(401).json({ error: 'Invalid Password' })
@@ -59,6 +62,10 @@ router.post('/sign-in', async (req, res) => {
     } catch (error) {
         res.status(500).json({error: error.message})
     }
+})
+
+router.get('/sign-out', (req, res) => {
+    res.json('You have successfully logged out')
 })
 
 module.exports = router
