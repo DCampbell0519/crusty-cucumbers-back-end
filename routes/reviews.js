@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Review = require('../models/Review');
-const Movie = require('../models/Movie');
+const Movie = require('../models/movie');
 const { requireAuth } = require('../middleware/auth');
 
 // Helper to recalc average rating and total reviews for a movie
