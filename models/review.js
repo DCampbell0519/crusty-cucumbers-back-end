@@ -7,4 +7,6 @@ const reviewSchema = new mongoose.Schema({
   reviewText: { type: String, required: true },
 }, { timestamps: true });
 
+const Review = mongoose.models.Review || mongoose.model('Review', reviewSchema)
+
 module.exports = mongoose.model('Review', reviewSchema);
