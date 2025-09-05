@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Review = require('../models/Review');
 const Movie = require('../models/movie');
-const { requireAuth } = require('../middleware/auth');
+const verifyToken = require('../middleware/verify-token.js')
 
 // Helper to recalc average rating and total reviews for a movie
 async function recalcMovieRating(movieId) {
@@ -14,7 +14,7 @@ async function recalcMovieRating(movieId) {
 }
 
 // POST /api/movies/:id/reviews - create review
-router.post('/movies/:id/reviews', requireAuth, async (req, res) => {
+router.post('/movies/:id/reviews', verifyToken, async (req, res) => {
   try {
     const movieId = req.params.id;
     const { rating, reviewText } = req.body;
@@ -50,7 +50,7 @@ router.get('/movies/:id/reviews', async (req, res) => {
 });
 
 // PUT /api/reviews/:id - update review (ownership check)
-router.put('/reviews/:id', requireAuth, async (req, res) => {
+router.put('/reviews/:id', verifyToken, async (req, res) => {
   try {
     const reviewId = req.params.id;
     const { rating, reviewText } = req.body;
@@ -74,7 +74,7 @@ router.put('/reviews/:id', requireAuth, async (req, res) => {
 });
 
 // DELETE /api/reviews/:id - delete review (ownership check)
-router.delete('/reviews/:id', requireAuth, async (req, res) => {
+router.delete('/reviews/:id', verifyToken, async (req, res) => {
   try {
     const reviewId = req.params.id;
     const userId = req.user._id;
