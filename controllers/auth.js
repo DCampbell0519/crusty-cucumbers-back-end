@@ -47,7 +47,7 @@ router.post('/sign-in', async (req, res) => {
         }
 
         // this will return true if the passwords match, and false if they do not
-        const isPasswordCorrect = bcrypt.compareSync(req.body.hashedPassword, userInDatabase.hashedPassword)
+        const isPasswordCorrect = bcrypt.compareSync(req.body.password, userInDatabase.hashedPassword)
 
         if (!isPasswordCorrect) {
             return res.status(401).json({ error: 'Invalid Password' })
