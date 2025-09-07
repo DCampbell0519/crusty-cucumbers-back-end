@@ -16,11 +16,11 @@ router.post('/sign-up', async (req, res) => {
             return res.status(409).json({ error: 'Username already taken'})
         }
 
-        
+        console.log(req.body)
         // No user with that username exists, let's create a new user
         const user = await User.create({
             username: req.body.username,
-            hashedPassword: bcrypt.hashSync(req.body.hashedPassword, saltRounds),
+            hashedPassword: bcrypt.hashSync(req.body.password, saltRounds),
             email: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName
@@ -47,7 +47,7 @@ router.post('/sign-in', async (req, res) => {
         }
 
         // this will return true if the passwords match, and false if they do not
-        const isPasswordCorrect = bcrypt.compareSync(req.body.hashedPassword, userInDatabase.hashedPassword)
+        const isPasswordCorrect = bcrypt.compareSync(req.body.password, userInDatabase.hashedPassword)
 
         if (!isPasswordCorrect) {
             return res.status(401).json({ error: 'Invalid Password' })
