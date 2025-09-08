@@ -13,13 +13,17 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true,
     },
-    firstName: {
+    favoriteMovieQuote: {
         type: String,
-        required: true,
     },
-    lastName: {
+    bio: {
         type: String,
-        required: true,
+    },
+    age: {
+        type: Number,
+    },
+    profilePhoto: {
+        type: String,
     },
 })
 
