@@ -20,9 +20,9 @@ mongoose.connection.on('connected', () => {
 })
 
 
-app.use(cors({origin: 'http://localhost:5173', credentials: true })) // allows other API's or sites to connect to our API
-app.use(express.json()) // Accept JSON in req.body
-app.use(morgan('dev')) // logs requests to the console
+app.use(cors({origin: 'http://localhost:5173', credentials: true })) 
+app.use(express.json()) 
+app.use(morgan('dev'))
 
 // Routes
 app.use('/test-jwt', testJwtWRouter)
