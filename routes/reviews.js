@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Review = require('../models/Review');
+const Review = require('../models/review');
 const Movie = require('../models/movie');
-const verifyToken = require('../middleware/verify-token.js')
+const verifyToken = require('../middleware/verify-token.js');
 
 // Helper to recalc average rating and total reviews for a movie
 async function recalcMovieRating(movieId) {
   const reviews = await Review.find({ movieId });
   const totalReviews = reviews.length;
   const averageRating = totalReviews === 0 ? 0 : reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews;
-
   await Movie.findByIdAndUpdate(movieId, { averageRating, totalReviews });
 }
 
@@ -19,17 +18,12 @@ router.post('/movies/:id/reviews', verifyToken, async (req, res) => {
     const movieId = req.params.id;
     const { rating, reviewText } = req.body;
     const userId = req.user._id;
-
     if (!rating || !reviewText) {
       return res.status(400).json({ error: 'Rating and reviewText are required' });
     }
-
-
     const review = new Review({ userId, movieId, rating, reviewText });
     await review.save();
-
     await recalcMovieRating(movieId);
-
     res.status(201).json(review);
   } catch (err) {
     console.error(err);
@@ -55,17 +49,13 @@ router.put('/reviews/:id', verifyToken, async (req, res) => {
     const reviewId = req.params.id;
     const { rating, reviewText } = req.body;
     const userId = req.user._id;
-
     const review = await Review.findById(reviewId);
     if (!review) return res.status(404).json({ error: 'Review not found' });
     if (!review.userId.equals(userId)) return res.status(403).json({ error: 'Not authorized' });
-
     if (rating) review.rating = rating;
     if (reviewText) review.reviewText = reviewText;
-
     await review.save();
     await recalcMovieRating(review.movieId);
-
     res.json(review);
   } catch (err) {
     console.error(err);
@@ -78,14 +68,11 @@ router.delete('/reviews/:id', verifyToken, async (req, res) => {
   try {
     const reviewId = req.params.id;
     const userId = req.user._id;
-
     const review = await Review.findById(reviewId);
     if (!review) return res.status(404).json({ error: 'Review not found' });
     if (!review.userId.equals(userId)) return res.status(403).json({ error: 'Not authorized' });
-
     await Review.findByIdAndDelete(reviewId);
     await recalcMovieRating(review.movieId);
-
     res.json({ message: 'Review deleted' });
   } catch (err) {
     console.error(err);
