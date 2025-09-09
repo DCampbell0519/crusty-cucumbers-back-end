@@ -32,7 +32,7 @@ app.use('/api', reviewsRouter)
 
 app.use('/api/movies', moviesRouter)
 
-
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
     console.log('Welcome to the Thunderdome!')
 })
