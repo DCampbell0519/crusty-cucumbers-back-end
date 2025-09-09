@@ -17,13 +17,19 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB on ${mongoose.connection.name}`)
 })
 
-app.use(cors({origin: 'http://localhost:5173', credentials: true })) 
+
+
+app.use(cors({ origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], credentials: true })) 
+
 app.use(express.json()) 
 app.use(morgan('dev'))
 
-// Routes
+
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
+
+app.use('/api', reviewsRouter)
+
 app.use('/api/movies', moviesRouter)
 
 
