@@ -27,22 +27,20 @@ router.get("/profile", verifyToken, async (req, res) => {
   }
 });
 
-router.put('/profile', verifyToken, async (req, res) => {
+router.put("/profile", verifyToken, async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user._id,
-      req.body,
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
+      new: true,
+    });
 
     if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found '})
+      return res.status(404).json({ error: "User not found " });
     }
 
     res.json({ user: updatedUser });
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-})
+});
 
 module.exports = router;
