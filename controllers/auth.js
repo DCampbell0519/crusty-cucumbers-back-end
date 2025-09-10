@@ -29,7 +29,6 @@ router.post("/sign-up", async (req, res) => {
     const token = jwt.sign({ payload }, process.env.JWT_SECRET);
 
     res.status(201).json({ token });
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -62,7 +61,6 @@ router.post("/sign-in", async (req, res) => {
     const token = jwt.sign({ payload }, process.env.JWT_SECRET);
 
     res.status(200).json({ token });
-    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -1,8 +1,7 @@
-const router = require('express').Router()
-const { searchMovies, getMovie } = require('../controllers/movies')
+const router = require("express").Router();
+const { searchMovies, getMovie } = require("../controllers/movies");
 
-router.get('/search', searchMovies)
+router.get("/search", searchMovies);
+router.get("/:imdbID", getMovie);
 
-router.get('/:imdbID', getMovie)
-
-module.exports = router
+module.exports = router;
